@@ -7,5 +7,5 @@ build:
 run:
   command:  
     - cd ./src
-    - gunicorn pokerbot.wsgi
+    - python3 -m gunicorn pokerbot.wsgi
       
