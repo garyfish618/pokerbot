@@ -1,12 +1,10 @@
 version: 1.0
 runtime: python3
 build:
-  commands:
-    build:
+  commands: 
+    build: 
       - pip install -r requirements.txt
 run:
-  command:  
-    - python -m gunicorn pokerbot.wsgi --chdir ./src/
-
+  command: python -m gunicorn pokerbot.wsgi --chdir ./src/
   network:
     port: 8000
