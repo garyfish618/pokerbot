@@ -7,4 +7,6 @@ build:
 run:
   command:  
     - python -m gunicorn pokerbot.wsgi --chdir ./src/
-      
+
+  network:
+    port:8000
