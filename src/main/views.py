@@ -15,22 +15,22 @@ class MainPokerBotApiView(APIView):
         try:
             PUBLIC_KEY = '109f9036e7831400d46b3d44b7d3b7e3f837fe3c60e04427dfcf22cb204df8ef'
 
-            logger.error(request.headers)
             verify_key = VerifyKey(bytes.fromhex(PUBLIC_KEY))
             signature = request.headers["X-Signature-Ed25519"]
             timestamp = request.headers["X-Signature-Timestamp"]
             
-            logger.error("Attempting signature verification")
-            print(body)
             verify_key.verify(f'{timestamp}{body}'.encode(), bytes.fromhex(signature))
-            logger.error("Verified signature")
+
+            # ACK ping coming from discord
+            body = request.data
+            if body.get('type') == 1:
+                logger.error("Got type with 1")
+                return Response({'type': 1}, status=200)
+
         except (ValueError, BadSignatureError):
             return HttpResponseBadRequest(JsonResponse({'errorMessage': 'Invalid request signature'}))
         except KeyError:
             return HttpResponseBadRequest(JsonResponse({'errorMessage': 'Missing required headers'}))
     
 
-        # ACK ping coming from discord
-        if body.get('type') == 1:
-            logger.error("Got type with 1")
-            return Response({'type': 1}, status=200)
+
