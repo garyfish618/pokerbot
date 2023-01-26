@@ -12,8 +12,8 @@ class MainPokerBotApiView(APIView):
         try:
             PUBLIC_KEY = '109f9036e7831400d46b3d44b7d3b7e3f837fe3c60e04427dfcf22cb204df8ef'
 
-            verify_key = VerifyKey(bytes.fromhex(PUBLIC_KEY))
             print(request.headers)
+            verify_key = VerifyKey(bytes.fromhex(PUBLIC_KEY))
             signature = request.headers["X-Signature-Ed25519"]
             timestamp = request.headers["X-Signature-Timestamp"]
             
