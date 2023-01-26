@@ -6,9 +6,10 @@ from django.http import HttpResponseBadRequest, JsonResponse
 import logging
 
 class MainPokerBotApiView(APIView):
-    logger = logging.getLogger(__file__)
+    
 
     def post(self, request):
+        logger = logging.getLogger(__file__)
         body = request.data
         
         try:
