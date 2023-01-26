@@ -10,7 +10,7 @@ class MainPokerBotApiView(APIView):
 
     def post(self, request):
         logger = logging.getLogger(__file__)
-        body = request.data
+        body = request.body.decode('utf-8')
         
         try:
             PUBLIC_KEY = '109f9036e7831400d46b3d44b7d3b7e3f837fe3c60e04427dfcf22cb204df8ef'
@@ -21,6 +21,7 @@ class MainPokerBotApiView(APIView):
             timestamp = request.headers["X-Signature-Timestamp"]
             
             logger.error("Attempting signature verification")
+            print(body)
             verify_key.verify(f'{timestamp}{body}'.encode(), bytes.fromhex(signature))
             logger.error("Verified signature")
         except (ValueError, BadSignatureError):
