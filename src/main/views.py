@@ -16,9 +16,11 @@ class MainPokerBotApiView(APIView):
 
         try:
             verify_key.verify(f'{timestamp}{body}'.encode(), bytes.fromhex(signature))
+            print("Verified signature")
         except BadSignatureError:
             abort(401, 'invalid request signature')
 
         # ACK ping coming from discord
         if request.data.get('type') == 1:
+            print("Got type with 1")
             return Response({'type': 1}, status=200)
