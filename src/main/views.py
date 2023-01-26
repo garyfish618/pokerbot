@@ -13,7 +13,7 @@ class MainPokerBotApiView(APIView):
         signature = request.headers["X-Signature-Ed25519"]
         timestamp = request.headers["X-Signature-Timestamp"]
         body = request.data.decode("utf-8")
-
+        print("Attempting signature verification")
         try:
             verify_key.verify(f'{timestamp}{body}'.encode(), bytes.fromhex(signature))
             print("Verified signature")
