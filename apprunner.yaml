@@ -5,6 +5,12 @@ build:
     build: 
       - pip install -r requirements.txt
 run:
+  env:
+    - name: RUNTIME_ENV 
+    - value: prod
+    - name: APP_PUBLIC_KEY
+    - value: 109f9036e7831400d46b3d44b7d3b7e3f837fe3c60e04427dfcf22cb204df8ef
+
   command: python -m gunicorn pokerbot.wsgi --chdir ./src/
   network:
     port: 8000
