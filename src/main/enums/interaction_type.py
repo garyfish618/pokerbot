@@ -1,4 +1,4 @@
-from enum import enum
+from enum import Enum
 
 class InteractionType(Enum):
     PING = 1

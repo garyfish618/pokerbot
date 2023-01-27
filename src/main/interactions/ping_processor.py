@@ -1,8 +1,14 @@
-class PingProcessor()
+import logging
+from rest_framework.response import Response
 
-    def process(self, request):
+logger = logging.getLogger(__file__)
+
+class PingProcessor():
+
+    @staticmethod
+    def process(request):
         # ACK ping coming from discord
             body = request.data
             if body.get('type') == 1:
-                self.logger.info("Received PING from Discord")
+                logger.info("Received PING from Discord")
                 return Response({'type': 1}, status=200)

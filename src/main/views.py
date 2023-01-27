@@ -1,9 +1,10 @@
 from rest_framework.views import APIView
-from rest_framework.response import Response
 from nacl.signing import VerifyKey
 from nacl.exceptions import BadSignatureError
 from django.http import HttpResponseBadRequest, JsonResponse
 from django.conf import settings
+from .interactions.ping_processor import PingProcessor
+from .enums.interaction_type import InteractionType
 import logging
 
 class MainPokerBotApiView(APIView):
@@ -19,9 +20,9 @@ class MainPokerBotApiView(APIView):
             if isinstance(response, HttpResponseBadRequest):
                 self.logger.error("Received an invalid signature. Rejecting")
                 return response
-
         
-
+        if InteractionType(request.data["type"]) == InteractionType.PING:
+            return PingProcessor.process(request)
 
     def verify_signature(self, request):
         body = request.body.decode('utf-8')
