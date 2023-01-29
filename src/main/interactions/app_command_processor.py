@@ -9,6 +9,11 @@ class AppCommandProcessor():
     @staticmethod
     def process(request):
         body = request.data['data']
-        if body.get('name') == 'test':
+        command_name = body.get('name')
+        if command_name == 'test':
             return TestCommandProcessor.process()
+
+        else:
+            logger.error(f'Unknown command provided with name={command_name}')
+            
             

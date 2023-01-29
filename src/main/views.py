@@ -36,7 +36,11 @@ class MainPokerBotApiView(APIView):
 
             # case InteractionType.APPLICATION_COMMAND_AUTOCOMPLETE:
 
-            # case InteractionType.MODAL_SUBMIT:            
+            # case InteractionType.MODAL_SUBMIT:       
+
+            case _:
+                logger.error(f'Unknown interaction type with value {request.data['type']}')
+                return(HttpResponseBadRequest(JsonResponse({'errorMessage': ''})))     
 
     def verify_signature(self, request):
         body = request.body.decode('utf-8')
@@ -48,6 +52,8 @@ class MainPokerBotApiView(APIView):
             
             verify_key.verify(f'{timestamp}{body}'.encode(), bytes.fromhex(signature))
         except (ValueError, BadSignatureError):
+            logger.error(f'Failed to verify signature: {signature}; timestamp: {timestamp}')
             return HttpResponseBadRequest(JsonResponse({'errorMessage': 'Invalid request signature'}))
         except KeyError:
+            logger.error(f'Failed to verify signature: {signature}; timestamp: {timestamp}')
             return HttpResponseBadRequest(JsonResponse({'errorMessage': 'Missing required headers'}))
