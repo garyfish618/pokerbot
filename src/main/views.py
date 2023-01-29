@@ -4,6 +4,7 @@ from nacl.exceptions import BadSignatureError
 from django.http import HttpResponseBadRequest, JsonResponse
 from django.conf import settings
 from .interactions.ping_processor import PingProcessor
+from .interactions.app_command_processor import AppCommandProcessor
 from .enums.interaction_type import InteractionType
 import logging
 
@@ -21,8 +22,21 @@ class MainPokerBotApiView(APIView):
                 self.logger.error("Received an invalid signature. Rejecting")
                 return response
         
-        if InteractionType(request.data["type"]) == InteractionType.PING:
-            return PingProcessor.process(request)
+
+
+        match InteractionType(request.data["type"]):
+            case InteractionType.PING:
+                return PingProcessor.process(request)
+                
+
+            case InteractionType.APPLICATION_COMMAND:
+                return AppCommandProcessor.process(request)
+
+            # case InteractionType.MESSAGE_COMPONENT:
+
+            # case InteractionType.APPLICATION_COMMAND_AUTOCOMPLETE:
+
+            # case InteractionType.MODAL_SUBMIT:            
 
     def verify_signature(self, request):
         body = request.body.decode('utf-8')

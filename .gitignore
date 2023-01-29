@@ -1,5 +1,6 @@
 pokerbot-env
 src/main/__pycache__
-src/pokerbot/__pycache__
+src/pokerbot/__pycache__/
 src/main/enums/__pycache__/
 src/main/interactions/__pycache__/
+src/main/__pycache__/
