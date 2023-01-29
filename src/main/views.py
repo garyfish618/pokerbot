@@ -22,25 +22,21 @@ class MainPokerBotApiView(APIView):
                 self.logger.error("Received an invalid signature. Rejecting")
                 return response
         
+        elif InteractionType(request.data["type"]) == InteractionType.PING:
+            return PingProcessor.process(request)
 
+        elif InteractionType(request.data["type"]) == InteractionType.APPLICATION_COMMAND:
+            return AppCommandProcessor.process(request)
+        
+        else:
+            logger.error(f'Unknown interaction type with value {request.data["type"]}')
+            return(HttpResponseBadRequest(JsonResponse({'errorMessage': ''})))  
 
-        match InteractionType(request.data["type"]):
-            case InteractionType.PING:
-                return PingProcessor.process(request)
-                
+        # case InteractionType.MESSAGE_COMPONENT:
 
-            case InteractionType.APPLICATION_COMMAND:
-                return AppCommandProcessor.process(request)
+        # case InteractionType.APPLICATION_COMMAND_AUTOCOMPLETE:
 
-            # case InteractionType.MESSAGE_COMPONENT:
-
-            # case InteractionType.APPLICATION_COMMAND_AUTOCOMPLETE:
-
-            # case InteractionType.MODAL_SUBMIT:       
-
-            case _:
-                logger.error(f'Unknown interaction type with value {request.data["type"]}')
-                return(HttpResponseBadRequest(JsonResponse({'errorMessage': ''})))     
+        # case InteractionType.MODAL_SUBMIT:          
 
     def verify_signature(self, request):
         body = request.body.decode('utf-8')
