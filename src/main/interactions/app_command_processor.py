@@ -16,4 +16,5 @@ class AppCommandProcessor():
         else:
             logger.error(f'Unknown command provided with name={command_name}')
             
+
             

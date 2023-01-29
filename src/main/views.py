@@ -23,20 +23,25 @@ class MainPokerBotApiView(APIView):
                 return response
         
         elif InteractionType(request.data["type"]) == InteractionType.PING:
-            return PingProcessor.process(request)
+            response =  PingProcessor.process(request)
 
         elif InteractionType(request.data["type"]) == InteractionType.APPLICATION_COMMAND:
-            return AppCommandProcessor.process(request)
+            response = AppCommandProcessor.process(request)
         
         else:
             logger.error(f'Unknown interaction type with value {request.data["type"]}')
-            return(HttpResponseBadRequest(JsonResponse({'errorMessage': ''})))  
+            return(HttpResponseBadRequest(JsonResponse({'errorMessage': 'Unknown interaction'})))  
 
         # case InteractionType.MESSAGE_COMPONENT:
 
         # case InteractionType.APPLICATION_COMMAND_AUTOCOMPLETE:
 
-        # case InteractionType.MODAL_SUBMIT:          
+        # case InteractionType.MODAL_SUBMIT:  
+
+        if response == None:
+            return(HttpResponseBadRequest(JsonResponse({'errorMessage': 'Unknown interaction' }))) 
+
+        return response       
 
     def verify_signature(self, request):
         body = request.body.decode('utf-8')
