@@ -39,7 +39,7 @@ class MainPokerBotApiView(APIView):
             # case InteractionType.MODAL_SUBMIT:       
 
             case _:
-                logger.error(f'Unknown interaction type with value {request.data['type']}')
+                logger.error(f'Unknown interaction type with value {request.data["type"]}')
                 return(HttpResponseBadRequest(JsonResponse({'errorMessage': ''})))     
 
     def verify_signature(self, request):
