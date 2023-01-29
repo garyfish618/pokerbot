@@ -5,6 +5,7 @@ build:
     build: 
       - pip install -r requirements.txt
 run:
+  runtime-version: 3.10.8
   env:
     - name: RUNTIME_ENV 
       value: prod
