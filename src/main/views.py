@@ -22,7 +22,7 @@ class MainPokerBotApiView(APIView):
                 self.logger.error("Received an invalid signature. Rejecting")
                 return response
         
-        elif InteractionType(request.data["type"]) == InteractionType.PING:
+        if InteractionType(request.data["type"]) == InteractionType.PING:
             response =  PingProcessor.process(request)
 
         elif InteractionType(request.data["type"]) == InteractionType.APPLICATION_COMMAND:
