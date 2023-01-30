@@ -14,7 +14,7 @@ class MainPokerBotApiView(APIView):
         self.logger = logging.getLogger(__file__)    
 
     def post(self, request):
-
+        self.logger.error("LOGGING")
         # Only run verification if not running on local
         if settings.RUNTIME_ENV != 'local':
             response = self.verify_signature(request)
@@ -29,7 +29,7 @@ class MainPokerBotApiView(APIView):
             response = AppCommandProcessor.process(request)
         
         else:
-            logger.error(f'Unknown interaction type with value {request.data["type"]}')
+            self.logger.error(f'Unknown interaction type with value {request.data["type"]}')
             return(HttpResponseBadRequest(JsonResponse({'errorMessage': 'Unknown interaction'})))  
 
         # case InteractionType.MESSAGE_COMPONENT:
@@ -53,8 +53,8 @@ class MainPokerBotApiView(APIView):
             
             verify_key.verify(f'{timestamp}{body}'.encode(), bytes.fromhex(signature))
         except (ValueError, BadSignatureError):
-            logger.error(f'Failed to verify signature: {signature}; timestamp: {timestamp}')
+            self.logger.error(f'Failed to verify signature: {signature}; timestamp: {timestamp}')
             return HttpResponseBadRequest(JsonResponse({'errorMessage': 'Invalid request signature'}))
         except KeyError:
-            logger.error(f'Failed to verify signature: {signature}; timestamp: {timestamp}')
+            self.logger.error(f'Failed to verify signature: {signature}; timestamp: {timestamp}')
             return HttpResponseBadRequest(JsonResponse({'errorMessage': 'Missing required headers'}))
