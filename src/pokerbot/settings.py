@@ -22,7 +22,7 @@ env = environ.Env()
 environ.Env.read_env()
 
 # Read database fields
-database_obj = json.loads(jsonenv('DB_INFO'))
+#database_obj = json.loads(jsonenv('DB_INFO'))
 
 
 
@@ -35,10 +35,7 @@ SECRET_KEY = 'django-insecure-g(@s=e=$kr_)j-ul*axd8_s)7jeby4csx8$u((mz+e94$1p6su
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    'mgtx4rde8p.us-west-2.awsapprunner.com',
-    'localhost'
-]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -89,14 +86,14 @@ WSGI_APPLICATION = 'pokerbot.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'USER': database_obj['username'],
-        'HOST': database_obj['host'],
-        'PORT': database_obj['port'],
-        'NAME': database_obj['dbname'],
-        'PASSWORD': database_obj['password']
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'USER': database_obj['username'],
+    #     'HOST': database_obj['host'],
+    #     'PORT': database_obj['port'],
+    #     'NAME': database_obj['dbname'],
+    #     'PASSWORD': database_obj['password']
+    # }
 }
 
 
