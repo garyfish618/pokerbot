@@ -1,0 +1,1 @@
+web: python -m gunicorn pokerbot.wsgi --chdir ./src/
