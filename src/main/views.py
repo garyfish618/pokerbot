@@ -14,7 +14,6 @@ class MainPokerBotApiView(APIView):
         self.logger = logging.getLogger(__file__)    
 
     def post(self, request):
-        self.logger.error("LOGGING")
         # Only run verification if not running on local
         if settings.RUNTIME_ENV != 'local':
             response = self.verify_signature(request)

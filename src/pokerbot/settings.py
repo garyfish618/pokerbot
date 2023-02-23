@@ -86,14 +86,7 @@ WSGI_APPLICATION = 'pokerbot.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'USER': database_obj['username'],
-    #     'HOST': database_obj['host'],
-    #     'PORT': database_obj['port'],
-    #     'NAME': database_obj['dbname'],
-    #     'PASSWORD': database_obj['password']
-    # }
+    "default": env.dj_db_url("DATABASE_URL", default="sqlite:///db.sqlite3")
 }
 
 
