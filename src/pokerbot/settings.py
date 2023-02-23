@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'pokerbot.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    "default": env.dj_db_url("DATABASE_URL", default="sqlite:///db.sqlite3")
+    "default": env.db_url("DATABASE_URL", default="sqlite:///db.sqlite3")
 }
 
 
