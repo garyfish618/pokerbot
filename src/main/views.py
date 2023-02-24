@@ -55,5 +55,5 @@ class MainPokerBotApiView(APIView):
             self.logger.error(f'Failed to verify signature: {signature}; timestamp: {timestamp}')
             return HttpResponseBadRequest(JsonResponse({'errorMessage': 'Invalid request signature'}))
         except KeyError:
-            self.logger.error(f'Failed to verify signature: {signature}; timestamp: {timestamp}')
+            self.logger.error(f'Failed to verify signature')
             return HttpResponseBadRequest(JsonResponse({'errorMessage': 'Missing required headers'}))
