@@ -7,7 +7,7 @@ class Test(models.Model):
 
 class Player(models.Model):
     nick_name = models.CharField(max_length=64)
-    user_id = models.CharField(max_length=64)
+    user_id = models.CharField(max_length=64, unique=True)
     username = models.CharField(max_length=64)
     discriminator = models.CharField(max_length=4)
-    credits = models.IntegerField()
+    credits = models.IntegerField(default=0)

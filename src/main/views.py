@@ -15,6 +15,7 @@ class MainPokerBotApiView(APIView):
 
     def post(self, request):
         # Only run verification if not running on local
+        # try:
         if settings.RUNTIME_ENV != 'local':
             response = self.verify_signature(request)
             if isinstance(response, HttpResponseBadRequest):
@@ -22,10 +23,10 @@ class MainPokerBotApiView(APIView):
                 return response
         
         if InteractionType(request.data["type"]) == InteractionType.PING:
-            response =  PingProcessor.process(request)
+            response, successful =  PingProcessor.process(request)
 
         elif InteractionType(request.data["type"]) == InteractionType.APPLICATION_COMMAND:
-            response = AppCommandProcessor.process(request)
+            response, successful = AppCommandProcessor.process(request)
         
         else:
             self.logger.error(f'Unknown interaction type with value {request.data["type"]}')
@@ -38,9 +39,15 @@ class MainPokerBotApiView(APIView):
         # case InteractionType.MODAL_SUBMIT:  
 
         if response == None:
-            return(HttpResponseBadRequest(JsonResponse({'errorMessage': 'Unknown interaction' }))) 
+            return(HttpResponseBadRequest(JsonResponse({'errorMessage': 'Error processing request' }))) 
 
-        return response       
+        if not successful:
+            return(HttpResponseBadRequest(JsonResponse({'errorMessage': response})))
+
+        return response   
+
+        # except:
+        #     return HttpResponseBadRequest(JsonResponse({'errorMessage': 'Invalid request'}))    
 
     def verify_signature(self, request):
         body = request.body.decode('utf-8')
