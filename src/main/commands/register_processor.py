@@ -13,7 +13,7 @@ class RegisterCommandProcessor():
             player, created = Player.objects.get_or_create(user_id=user['id'])
             print(created)
             if not created:
-                return Helpers.message_response(f'@{user["username"]}#{user["discriminator"]} you are already registered!'), True
+                return Helpers.message_response(f'@<{user["id"]}> you are already registered!'), True
 
             else:
                 player.username = user['username']
