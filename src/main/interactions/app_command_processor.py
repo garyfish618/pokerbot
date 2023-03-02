@@ -15,7 +15,7 @@ class AppCommandProcessor():
             return TestCommandProcessor.process()
 
         if command_name == 'register':
-            return RegisterCommandProcessor.process(request.data['user'])
+            return RegisterCommandProcessor.process(request.data['member']['user'])
 
         else:
             logger.error(f'Unknown command provided with name={command_name}')
