@@ -9,7 +9,7 @@ class TestCommandProcessor():
     @staticmethod
     def process():
 
-        return Helpers.message_response("Hello World"), True
+        return Helpers.message_response("Hello World")
 
         
 

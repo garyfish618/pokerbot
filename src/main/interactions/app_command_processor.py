@@ -16,11 +16,15 @@ class AppCommandProcessor():
             return TestCommandProcessor.process()
 
         if command_name == 'register':
-            return RegisterCommandProcessor.process(request.data['member']['user'])
+            return RegisterCommandProcessor.process_register(request.data['member']['user'])
+
+        if command_name == 'unregister':
+            return RegisterCommandProcessor.process_unregister(request.data['member']['user'])
 
         if command_name == 'credits':
-            return CreditsCommandProcessor.process(request.data['member'['user']])
+            return CreditsCommandProcessor.process_get_credits(request.data['member']['user'])
 
+            
         else:
             logger.error(f'Unknown command provided with name={command_name}')
             return "Invalid command", False

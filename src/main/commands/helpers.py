@@ -11,4 +11,4 @@ class Helpers():
             'data': {
                 'content': message
             }
-        }, status=200)
+        }, status=200), True
