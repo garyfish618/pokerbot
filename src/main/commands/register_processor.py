@@ -8,12 +8,12 @@ logger = logging.getLogger(__file__)
 class RegisterCommandProcessor():
 
     @staticmethod
-    def process(user, nickname=None):
+    def process_register(user):
         try:
             player, created = Player.objects.get_or_create(user_id=user['id'])
             print(created)
             if not created:
-                return Helpers.message_response(f'@<{user["id"]}> you are already registered!'), True
+                return Helpers.message_response(f'@{user["username"]}#{user["discriminator"]} you are already registered!'), True
 
             else:
                 player.username = user['username']
@@ -24,6 +24,11 @@ class RegisterCommandProcessor():
 
         except AttributeError as e:
             return "Invalid registration request. Missing fields: " + str(e), False
+
+    @staticmethod
+    def process_unregister(user):
+        player_deleted = Player.objects.filter(user_id=user['id']).delete()
+
 
 
 

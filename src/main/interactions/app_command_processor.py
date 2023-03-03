@@ -2,6 +2,7 @@ import logging
 from rest_framework.response import Response
 from ..commands.test_processor import TestCommandProcessor
 from ..commands.register_processor import RegisterCommandProcessor
+from ..commands.credits_processor import CreditsCommandProcessor
 
 logger = logging.getLogger(__file__)
 
@@ -16,6 +17,9 @@ class AppCommandProcessor():
 
         if command_name == 'register':
             return RegisterCommandProcessor.process(request.data['member']['user'])
+
+        if command_name == 'credits':
+            return CreditsCommandProcessor.process(request.data['member'['user']])
 
         else:
             logger.error(f'Unknown command provided with name={command_name}')
