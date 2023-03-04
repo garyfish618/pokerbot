@@ -1,0 +1,22 @@
+@startuml
+actor Player
+participant Pokerbot
+participant  GameAgent
+database Database
+
+Player -> Pokerbot: startGame(guildId)
+Pokerbot -> Database: Retrieve game for guild_id
+alt Game has not started
+    Pokerbot -> GameAgent: Initialize a GameAgent with guild_id
+    GameAgent -> Database: Retrieve cardset
+    alt No cardset exists
+        GameAgent -> Database: Create a cardset with guild_id
+    end
+    GameAgent -> Database: Set started = true
+    
+    
+
+else
+    Pokerbot -> Player: No game exists, call createGame()
+end
+@enduml

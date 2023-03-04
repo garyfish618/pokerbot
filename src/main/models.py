@@ -11,3 +11,10 @@ class Player(models.Model):
     username = models.CharField(max_length=64)
     discriminator = models.CharField(max_length=4)
     credits = models.IntegerField(default=0)
+
+class Game(models.Model):
+    guild_id = models.CharField(max_length=64, unique=True)
+    started = models.BooleanField(default=False)
+    credit_pot = models.IntegerField(default=0)
+    
+    

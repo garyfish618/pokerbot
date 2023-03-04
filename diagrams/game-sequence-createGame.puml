@@ -1,0 +1,15 @@
+@startuml
+actor Player
+participant Pokerbot
+database Database
+
+Player -> Pokerbot: createGame(guild_id)
+Pokerbot -> Database: Retrieve game for guild_id
+alt No game exists
+    Pokerbot -> Database: Create new game object(guild_id, credit_pot = 0, started = false)
+    Pokerbot -> Player: Game created
+
+else
+    Pokerbot -> Player: Game already exists
+end
+@enduml
