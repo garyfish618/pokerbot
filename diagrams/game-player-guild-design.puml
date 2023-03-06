@@ -1,0 +1,11 @@
+@startuml
+class Game {
+    Integer credit_pot
+    StringSnowflake guild_id
+    Boolean started
+    Integer game_state
+    Players[] players
+        
+
+}
+@enduml

@@ -8,11 +8,31 @@ Player -> Pokerbot: startGame(guildId)
 Pokerbot -> Database: Retrieve game for guild_id
 alt Game has not started
     Pokerbot -> GameAgent: Initialize a GameAgent with guild_id
+    Pokerbot -> Player: Game will begin shortly
     GameAgent -> Database: Retrieve cardset
     alt No cardset exists
         GameAgent -> Database: Create a cardset with guild_id
+
     end
-    GameAgent -> Database: Set started = true
+    GameAgent -> Database: Set started = true on game
+    GameAgent -> Database : Shuffle & Save cardset
+    loop until Player calls stopGame()
+        alt At least 2 Players have called joinGame() 
+            GameAgent -> GameAgent: Transition gamestate to setup
+            GameAgent -> Player: Inform players game is starting
+            GameAgent -> Player: Assign & inform bigBlind and smallBlind players
+            GameAgent -> Database: Deduct bigBlind and smallBlind players bets
+            GameAgent -> Player: Deal player hand
+
+            GameAgent -> Database: Update credit_pot
+            GameAgent -> GameAgent: Transition gamestate to pre-flop
+
+        else
+         GameAgent -> GameAgent: Sleep()
+        end
+    end loop
+
+
     
     
 
